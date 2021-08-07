@@ -1,4 +1,4 @@
-from sqlalchemy import delete
+from sqlalchemy import delete, update
 
 
 class BaseRepository:
@@ -7,7 +7,7 @@ class BaseRepository:
     def __init__(self, session):
         self.db = session
 
-    def delete(self, id: int):
+    def delete(self, id: str):
         stmt = delete(self._model).where(self._model.id == int(id))
 
         self.db.execute(stmt)
@@ -25,3 +25,8 @@ class BaseRepository:
         self.db.add(post)
         self.db.commit()
 
+    def update(self, id: str, values: dict):
+        stmt = update(self._model).where(self._model.id == int(id)).values(**values)
+
+        self.db.execute(stmt)
+        self.db.commit()
