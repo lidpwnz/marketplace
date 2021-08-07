@@ -1,5 +1,6 @@
 from databases.repositories.makes_repository import MakeRepository
 from http_fw.base_controller import BaseController
+from http_fw.errors import not_found
 from http_fw.response import Response
 from http_fw.template_engine import get_template
 from databases.repositories.cars_repository import CarsRepository
@@ -63,3 +64,14 @@ class CarsController(BaseController):
         self.response.set_status(Response.HTTP_MOVED_PERMANENTLY)
         self.response.add_header('Location', '/')
 
+    def detail(self):
+        cars_repository = CarsRepository(self.context)
+        car = cars_repository.find(id=self.request.query_params.get('id'))
+        if car:
+            tmp = get_template('static/detail.html', {**vars(car),
+                                                      'make': car.make})
+
+            self.response.add_header('Content-Type', 'text/html')
+            self.response.set_body(tmp)
+        else:
+            not_found(self.request, self.response)
