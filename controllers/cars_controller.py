@@ -56,7 +56,10 @@ class CarsController(BaseController):
         self.response.set_body(tmp)
 
     def new(self):
-        tmp = get_template('static/new.html', {'make_options': self._get_make_options()})
+        tmp = get_template('static/advertisement.html', {'make_options': self._get_make_options(),
+                                                         'url': '/advertisements/add',
+                                                         'btn': 'Create',
+                                                         'page_title': 'Place new advertisement'})
 
         self.response.add_header('Content-Type', 'text/html')
         self.response.set_body(tmp)
@@ -80,10 +83,22 @@ class CarsController(BaseController):
             not_found(self.request, self.response)
 
     def delete(self):
-        print(self.request.body)
-        print(self.request.query_params)
         cars_repository = CarsRepository(self.context)
         cars_repository.delete(id=self.request.query_params.get('id'))
 
         self.response.set_status(Response.HTTP_MOVED_PERMANENTLY)
         self.response.add_header('Location', '/')
+
+    def update_get(self):
+        car = self._get_car_by_id()
+        tmp = get_template('static/advertisement.html', {**vars(car),
+                                                         'make_options': self._get_make_options(),
+                                                         'url': '/advertisements/update',
+                                                         'btn': 'Edit',
+                                                         'page_title': 'Update advertisement'})
+
+        self.response.add_header('Content-Type', 'text/html')
+        self.response.set_body(tmp)
+
+    def update_post(self):
+        cars_repository = CarsRepository(self.context)
