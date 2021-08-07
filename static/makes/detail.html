@@ -31,8 +31,8 @@
     <h1 class="my-4">View Make</h1>
     <h2>Title: {{ title }}</h2>
     <div class="d-flex mt-4">
-        <form class="w-25" action="/makes/delete?id={{ id }}" method="post">
-            <button onclick="return confirm('Are you sure?')" class="btn btn-danger w-100" type="submit">
+        <form class="w-25" action="/makes/delete" method="post">
+            <button onclick="return confirm('Are you sure?')" name="id" value="{{ id }}" class="btn btn-danger w-100" type="submit">
                 Delete
             </button>
         </form>
