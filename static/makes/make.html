@@ -19,9 +19,9 @@
             <div class="collapse navbar-collapse header-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a class="nav-link active px-4 py-1 border-end" href="/">Advertisements</a>
+                    <a class="nav-link active px-4 py-1 border-end" href="/makes">Makes</a>
                     <a class="nav-link active px-4 py-1 border-end" href="/advertisements/add">Add Advertisement</a>
-<!--                    <a class="nav-link active px-4 py-1 border-end" href="/products/create">Add Product</a>-->
-<!--                    <a class="nav-link active px-4 py-1" href="/categories/add">Add Category</a>-->
+                    <a class="nav-link active px-4 py-1 border-end" href="/makes/add">Add Maker</a>
                 </div>
             </div>
         </nav>
@@ -35,39 +35,11 @@
                        id="id" value="{{ id }}">
         </label>
         <div class="mb-3">
-            <label for="make" class="product-form-label">
-                Make <select name="make_id" class="form-control" id="make">
-                {{ make_options }}
-            </select>
-            </label>
-
-        </div>
-        <div class="mb-3">
-            <label for="year" class="product-form-label">
-                Year<input type="number" class="form-control" name="year"
-                           id="year" value="{{ year }}" placeholder="Year" required>
+            <label for="title" class="product-form-label">Title
+                <input type="text" value="{{ title }}" class="form-control" name="title" id="title"
+                       placeholder="Title">
             </label>
         </div>
-        <div class="mb-3">
-            <label for="price" class="product-form-label">Price
-                <input type="number" value="{{ price }}" class="form-control" name="price" id="price"
-                       placeholder="Price" required>
-            </label>
-        </div>
-        <div class="mb-3">
-            <label for="image" class="product-form-label">Image
-                <input type="text" value="{{ image }}" class="form-control" name="image" id="image"
-                       placeholder="Image URL">
-            </label>
-        </div>
-        <label for="Description" class="product-form-label">Description
-            <textarea class="form-control product-description"
-                      placeholder="Description" name="description" id="Description">{{ description }}</textarea>
-        </label>
-        <label for="Contacts" class="product-form-label">Contacts
-            <textarea class="form-control product-contacts"
-                      placeholder="Contacts" name="contacts" id="Contacts">{{ contacts }}</textarea>
-        </label>
         <div>
             <button class="btn btn-primary my-3 px-5" type="submit">{{ btn }}</button>
         </div>
