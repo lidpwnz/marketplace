@@ -102,3 +102,8 @@ class CarsController(BaseController):
 
     def update_post(self):
         cars_repository = CarsRepository(self.context)
+        data = self.request.body
+        cars_repository.update(id=data.get('id'), values=data)
+
+        self.response.set_status(Response.HTTP_MOVED_PERMANENTLY)
+        self.response.add_header('Location', '/')
