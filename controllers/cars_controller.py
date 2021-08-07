@@ -7,7 +7,7 @@ from databases.repositories.cars_repository import CarsRepository
 
 class CarsController(BaseController):
 
-    def _parse_body(self):
+    def __parse_body(self):
         result = {key: int(value) if value.isdigit() else value for key, value in self.request.body.items()}
 
         if 'image' not in result:
@@ -24,25 +24,28 @@ class CarsController(BaseController):
 
         return options
 
-    def list(self):
+    def _get_cars_list_html(self):
         cars_repository = CarsRepository(self.context)
         cars = cars_repository.all()
 
         body = ''
         for car in cars:
             body += f"""
-       <div class="d-flex">
-          <span class="car-img-box">
-              <img src="{car.image}" class="car-image" alt="{car.make}">
-          </span>
-          <div class="d-flex flex-column">
-              <a class="car-make" href="/advertisements/detail?id={car.id}">{car.make} ({car.year})</a>
-              <div class="car-price">${car.price}</div>
-          </div>
-      </div>           
-            """
+         <div class="d-flex">
+            <span class="car-img-box">
+                <img src="{car.image}" class="car-image" alt="{car.make}">
+            </span>
+            <div class="d-flex flex-column">
+                <a class="car-make" href="/advertisements/detail?id={car.id}">{car.make} ({car.year})</a>
+                <div class="car-price">${car.price}</div>
+            </div>
+        </div>           
+              """
 
-        tmp = get_template('static/list.html', {'cars': body})
+        return body
+
+    def list(self):
+        tmp = get_template('static/list.html', {'cars': self._get_cars_list_html()})
 
         self.response.add_header('Content-Type', 'text/html')
         self.response.set_body(tmp)
@@ -55,7 +58,7 @@ class CarsController(BaseController):
 
     def create(self):
         cars_repository = CarsRepository(self.context)
-        cars_repository.add(**self._parse_body())
+        cars_repository.add(**self.__parse_body())
 
         self.response.set_status(Response.HTTP_MOVED_PERMANENTLY)
         self.response.add_header('Location', '/')
