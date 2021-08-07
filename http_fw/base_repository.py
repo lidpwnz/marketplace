@@ -1,4 +1,5 @@
-from sqlalchemy import delete, update
+from sqlalchemy import delete, update, select
+from models.car_model import Car
 
 
 class BaseRepository:
@@ -15,6 +16,16 @@ class BaseRepository:
 
     def find(self, **kwargs):
         return self.db.query(self._model).get(kwargs.get('id'))
+
+    def find_by_parameter(self, first_param, second_param, session):
+        stmt = select(self._model).where(getattr(self._model, first_param) == second_param)
+
+        result = session.execute(stmt)
+        cars = []
+        for i in result.scalars():
+            cars.append(i)
+
+        return cars
 
     def all(self):
         return self.db.query(self._model).all()
