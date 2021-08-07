@@ -8,6 +8,25 @@
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+<header class="bg-light">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light header-nav">
+            <a class="navbar-brand" href="/">OLX</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse header-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link active px-4 py-1 border-end" href="/">Advertisements</a>
+                    <a class="nav-link active px-4 py-1 border-end" href="/advertisements/add">Add Advertisement</a>
+<!--                    <a class="nav-link active px-4 py-1 border-end" href="/products/create">Add Product</a>-->
+<!--                    <a class="nav-link active px-4 py-1" href="/categories/add">Add Category</a>-->
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
   <div class="container">
     <h1 class="mb-4">Cars Dealership</h1>
     {{ cars }}

@@ -8,6 +8,25 @@
     <title>Title</title>
 </head>
 <body>
+<header class="bg-light">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light header-nav">
+            <a class="navbar-brand" href="/">OLX</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse header-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link active px-4 py-1 border-end" href="/">Advertisements</a>
+                    <a class="nav-link active px-4 py-1 border-end" href="/advertisements/add">Add Advertisement</a>
+                    <!--                    <a class="nav-link active px-4 py-1 border-end" href="/products/create">Add Product</a>-->
+                    <!--                    <a class="nav-link active px-4 py-1" href="/categories/add">Add Category</a>-->
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
 <div class="container">
     <h1 class="mb-4">View advertisement</h1>
     <img class="car-image" src="{{ image }}" alt="some_image">
@@ -19,13 +38,16 @@
         <b>Contacts: </b>{{ contacts }}
     </div>
     <div class="d-flex">
-        <form action="/advertisements/delete?id={{ id }}" method="post">
-            <button class="btn btn-warning" type="submit">
+        <form class="w-25" action="/advertisements/delete?id={{ id }}" method="post">
+            <button onclick="return confirm('Are you sure?')" class="btn btn-danger w-100" type="submit">
                 Delete
             </button>
         </form>
+        <a class="btn btn-primary w-25 ms-4" href="/advertisements/update?id={{ id }}">Edit</a>
     </div>
-    <a href="/">Return to home page</a>
+    <div class="mt-4">
+        <a href="/">Return to home page</a>
+    </div>
 
 </div>
 </body>

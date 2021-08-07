@@ -47,11 +47,11 @@
 }
 
 .header-nav {
-    justify-content: space-between;
+    justify-content: space-between !important;
 }
 
 .header-collapse {
-    flex-grow: unset;
+    flex-grow: unset !important;
 }
 
 .product-form-label {
