@@ -31,3 +31,7 @@ def hasattr_valid(db, var):
 def foreign_key(database: Any, id: int):
     db = database()
     return db.find({'id': id})
+
+
+def get_item_by_id(id, repository, session):
+    return repository(session).find(id=id)
