@@ -4,14 +4,10 @@ from http_fw.errors import not_found
 from http_fw.response import Response
 from http_fw.template_engine import get_template
 from databases.repositories.cars_repository import CarsRepository
+from http_fw.helpers import get_item_by_id
 
 
 class CarsController(BaseController):
-
-    def _get_car_by_id(self):
-        cars_repository = CarsRepository(self.context)
-        return cars_repository.find(id=self.request.query_params.get('id'))
-
     def __parse_body(self):
         result = {key: int(value) if value.isdigit() else value for key, value in self.request.body.items()}
 
@@ -72,7 +68,7 @@ class CarsController(BaseController):
         self.response.add_header('Location', '/')
 
     def detail(self):
-        car = self._get_car_by_id()
+        car = get_item_by_id(id=self.request.query_params.get('id'), repository=CarsRepository(self.context))
         if car:
             tmp = get_template('static/detail.html', {**vars(car),
                                                       'make': car.make})
@@ -90,7 +86,7 @@ class CarsController(BaseController):
         self.response.add_header('Location', '/')
 
     def update_get(self):
-        car = self._get_car_by_id()
+        car = get_item_by_id(id=self.request.query_params.get('id'), repository=CarsRepository(self.context))
         tmp = get_template('static/advertisement.html', {**vars(car),
                                                          'make_options': self._get_make_options(),
                                                          'url': '/advertisements/update',
