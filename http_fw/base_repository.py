@@ -1,3 +1,4 @@
+from sqlalchemy import delete
 
 
 class BaseRepository:
@@ -7,7 +8,10 @@ class BaseRepository:
         self.db = session
 
     def delete(self, id: int):
-        self._model.query.filter_by(id=id).delete()
+        stmt = delete(self._model).where(self._model.id == int(id))
+
+        self.db.execute(stmt)
+        self.db.commit()
 
     def find(self, **kwargs):
         return self.db.query(self._model).get(kwargs.get('id'))
