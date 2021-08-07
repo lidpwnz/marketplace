@@ -36,7 +36,7 @@ class CarsController(BaseController):
         body = ''
         for car in cars:
             body += f"""
-         <div class="d-flex">
+         <div class="d-flex mb-4">
             <span class="car-img-box">
                 <img src="{car.image}" class="car-image" alt="{car.make}">
             </span>
