@@ -1,0 +1,63 @@
+.product_img {
+    object-fit: cover;
+}
+
+.car-image {
+    width: 180px;
+    height: 180px;
+    border: 2px solid black;
+}
+
+.car-make {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.car-price {
+    font-size: 18px;
+}
+
+.car-img-box {
+    width: 20%;
+}
+
+.card_block {
+    width: 40%;
+}
+
+.card_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.form_container{
+    width: 40%;
+    margin-right: 30%;
+    margin-left: 5%;
+    font-size: medium;
+}
+.select_style{
+    font-size: 1rem!important;
+}
+.add_button{
+    border-radius: unset!important;
+}
+.mb-3{
+    border-radius: unset!important;
+}
+
+.header-nav {
+    justify-content: space-between;
+}
+
+.header-collapse {
+    flex-grow: unset;
+}
+
+.product-form-label {
+    width: 50%;
+}
+
+.product-description, .product-contacts {
+    height: 200px;
+}
