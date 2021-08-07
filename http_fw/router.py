@@ -39,9 +39,9 @@ class Router:
             return not_found(request, response)
 
         # noinspection PyBroadException
-        # try:
-        ctrl = route['ctrl'](request, response)
-        getattr(ctrl, route.get('method'))()
-        #
-        # except BaseException:
-        #     return internal_server_error(request, response)
+        try:
+            ctrl = route['ctrl'](request, response)
+            getattr(ctrl, route.get('method'))()
+
+        except BaseException:
+            return internal_server_error(request, response)
