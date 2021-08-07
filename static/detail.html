@@ -18,7 +18,15 @@
         <b>Description: </b>{{ description }}<br>
         <b>Contacts: </b>{{ contacts }}
     </div>
+    <div class="d-flex">
+        <form action="/advertisements/delete?id={{ id }}" method="post">
+            <button class="btn btn-warning" type="submit">
+                Delete
+            </button>
+        </form>
+    </div>
     <a href="/">Return to home page</a>
+
 </div>
 </body>
 </html>
