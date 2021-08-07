@@ -8,4 +8,6 @@ router.get('/advertisements/add', CarsController, 'new')
 router.post('/advertisements/add', CarsController, 'create')
 router.get('/advertisements/detail', CarsController, 'detail')
 router.post('/advertisements/delete', CarsController, 'delete')
+router.get('/advertisements/update', CarsController, 'update_get')
+router.post('/advertisements/update', CarsController, 'update_post')
 
