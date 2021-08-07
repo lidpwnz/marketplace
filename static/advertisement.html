@@ -22,31 +22,31 @@
         <div class="mb-3">
             <label for="year" class="product-form-label">
                 Year<input type="number" class="form-control" name="year"
-                           id="year" placeholder="Year" required>
+                           id="year" value="{{ year }}" placeholder="Year" required>
             </label>
         </div>
         <div class="mb-3">
             <label for="price" class="product-form-label">Price
-                <input type="number" class="form-control" name="price" id="price"
+                <input type="number" value="{{ price }}" class="form-control" name="price" id="price"
                        placeholder="Price" required>
             </label>
         </div>
         <div class="mb-3">
             <label for="image" class="product-form-label">Image
-                <input type="text" class="form-control" name="image" id="image"
+                <input type="text" value="{{ image }}" class="form-control" name="image" id="image"
                        placeholder="Image URL">
             </label>
         </div>
         <label for="Description" class="product-form-label">Description
             <textarea class="form-control product-description"
-                      placeholder="Description" name="description" id="Description"></textarea>
+                      placeholder="Description" name="description" id="Description">{{ description }}</textarea>
         </label>
         <label for="Contacts" class="product-form-label">Contacts
             <textarea class="form-control product-contacts"
-                      placeholder="Contacts" name="contacts" id="Contacts"></textarea>
+                      placeholder="Contacts" name="contacts" id="Contacts">{{ contacts }}</textarea>
         </label>
         <div>
-            <button class="btn btn-primary my-3" type="submit">{{ btn }}</button>
+            <button class="btn btn-primary my-3 px-5" type="submit">{{ btn }}</button>
         </div>
         <a href="/">Return to home page</a>
     </form>
