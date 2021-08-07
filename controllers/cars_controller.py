@@ -8,6 +8,10 @@ from databases.repositories.cars_repository import CarsRepository
 
 class CarsController(BaseController):
 
+    def _get_car_by_id(self):
+        cars_repository = CarsRepository(self.context)
+        return cars_repository.find(id=self.request.query_params.get('id'))
+
     def __parse_body(self):
         result = {key: int(value) if value.isdigit() else value for key, value in self.request.body.items()}
 
@@ -65,8 +69,7 @@ class CarsController(BaseController):
         self.response.add_header('Location', '/')
 
     def detail(self):
-        cars_repository = CarsRepository(self.context)
-        car = cars_repository.find(id=self.request.query_params.get('id'))
+        car = self._get_car_by_id()
         if car:
             tmp = get_template('static/detail.html', {**vars(car),
                                                       'make': car.make})
@@ -75,3 +78,12 @@ class CarsController(BaseController):
             self.response.set_body(tmp)
         else:
             not_found(self.request, self.response)
+
+    def delete(self):
+        print(self.request.body)
+        print(self.request.query_params)
+        cars_repository = CarsRepository(self.context)
+        cars_repository.delete(id=self.request.query_params.get('id'))
+
+        self.response.set_status(Response.HTTP_MOVED_PERMANENTLY)
+        self.response.add_header('Location', '/')
