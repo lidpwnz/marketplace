@@ -46,16 +46,16 @@ class CarsController(BaseController):
         return body
 
     def list(self):
-        tmp = get_template('static/list.html', {'cars': self._get_cars_list_html()})
+        tmp = get_template('static/advertisements/list.html', {'cars': self._get_cars_list_html()})
 
         self.response.add_header('Content-Type', 'text/html')
         self.response.set_body(tmp)
 
     def new(self):
-        tmp = get_template('static/advertisement.html', {'make_options': self._get_make_options(),
-                                                         'url': '/advertisements/add',
-                                                         'btn': 'Create',
-                                                         'page_title': 'Place new advertisement'})
+        tmp = get_template('static/advertisements/advertisement.html', {'make_options': self._get_make_options(),
+                                                                        'url': '/advertisements/add',
+                                                                        'btn': 'Create',
+                                                                        'page_title': 'Place new advertisement'})
 
         self.response.add_header('Content-Type', 'text/html')
         self.response.set_body(tmp)
@@ -70,8 +70,8 @@ class CarsController(BaseController):
     def detail(self):
         car = get_item_by_id(id=self.request.query_params.get('id'), repository=CarsRepository(self.context))
         if car:
-            tmp = get_template('static/detail.html', {**vars(car),
-                                                      'make': car.make})
+            tmp = get_template('static/advertisements/detail.html', {**vars(car),
+                                                                     'make': car.make})
 
             self.response.add_header('Content-Type', 'text/html')
             self.response.set_body(tmp)
@@ -87,11 +87,11 @@ class CarsController(BaseController):
 
     def update_get(self):
         car = get_item_by_id(id=self.request.query_params.get('id'), repository=CarsRepository(self.context))
-        tmp = get_template('static/advertisement.html', {**vars(car),
-                                                         'make_options': self._get_make_options(),
-                                                         'url': '/advertisements/update',
-                                                         'btn': 'Edit',
-                                                         'page_title': 'Update advertisement'})
+        tmp = get_template('static/advertisements/advertisement.html', {**vars(car),
+                                                                        'make_options': self._get_make_options(),
+                                                                        'url': '/advertisements/update',
+                                                                        'btn': 'Edit',
+                                                                        'page_title': 'Update advertisement'})
 
         self.response.add_header('Content-Type', 'text/html')
         self.response.set_body(tmp)
