@@ -5,10 +5,11 @@ from http_fw.response import Response
 from http_fw.template_engine import get_template
 from databases.repositories.cars_repository import CarsRepository
 from http_fw.helpers import get_item_by_id
+from models.car_model import Car
 
 
 class CarsController(BaseController):
-    def __parse_body(self):
+    def __parse_body(self) -> dict:
         result = {key: int(value) if value.isdigit() else value for key, value in self.request.body.items()}
 
         if 'image' not in result:
@@ -16,16 +17,20 @@ class CarsController(BaseController):
 
         return result
 
-    def _get_make_options(self):
+    def _get_make_options(self, car: Car = None) -> str:
         makes_list = MakeRepository(self.context).all()
         options = ''
 
         for make in makes_list:
-            options += f'<option value="{make.id}">{make.title}</option>'
+            if car and int(car.make_id) == make.id:
+                options += f'<option value="{make.id}" selected>{make.title}</option>'
+
+            else:
+                options += f'<option value="{make.id}">{make.title}</option>'
 
         return options
 
-    def _get_cars_list_html(self):
+    def _get_cars_list_html(self) -> str:
         cars_repository = CarsRepository(self.context)
         cars = cars_repository.all()
 
@@ -45,13 +50,13 @@ class CarsController(BaseController):
 
         return body
 
-    def list(self):
+    def list(self) -> None:
         tmp = get_template('static/advertisements/list.html', {'cars': self._get_cars_list_html()})
 
         self.response.add_header('Content-Type', 'text/html')
         self.response.set_body(tmp)
 
-    def new(self):
+    def new(self) -> None:
         tmp = get_template('static/advertisements/advertisement.html', {'make_options': self._get_make_options(),
                                                                         'url': '/advertisements/add',
                                                                         'btn': 'Create',
@@ -60,14 +65,14 @@ class CarsController(BaseController):
         self.response.add_header('Content-Type', 'text/html')
         self.response.set_body(tmp)
 
-    def create(self):
+    def create(self) -> None:
         cars_repository = CarsRepository(self.context)
         cars_repository.add(**self.__parse_body())
 
         self.response.set_status(Response.HTTP_MOVED_PERMANENTLY)
         self.response.add_header('Location', '/')
 
-    def detail(self):
+    def detail(self) -> None:
         car = get_item_by_id(id=self.request.query_params.get('id'), repository=CarsRepository(self.context))
         if car:
             tmp = get_template('static/advertisements/detail.html', {**vars(car),
@@ -78,17 +83,17 @@ class CarsController(BaseController):
         else:
             not_found(self.request, self.response)
 
-    def delete(self):
+    def delete(self) -> None:
         cars_repository = CarsRepository(self.context)
         cars_repository.delete(id=self.request.query_params.get('id'))
 
         self.response.set_status(Response.HTTP_MOVED_PERMANENTLY)
         self.response.add_header('Location', '/')
 
-    def update_get(self):
+    def update_get(self) -> None:
         car = get_item_by_id(id=self.request.query_params.get('id'), repository=CarsRepository(self.context))
         tmp = get_template('static/advertisements/advertisement.html', {**vars(car),
-                                                                        'make_options': self._get_make_options(),
+                                                                        'make_options': self._get_make_options(car),
                                                                         'url': '/advertisements/update',
                                                                         'btn': 'Edit',
                                                                         'page_title': 'Update advertisement'})
@@ -96,7 +101,7 @@ class CarsController(BaseController):
         self.response.add_header('Content-Type', 'text/html')
         self.response.set_body(tmp)
 
-    def update_post(self):
+    def update_post(self) -> None:
         cars_repository = CarsRepository(self.context)
         data = self.request.body
         cars_repository.update(id=data.get('id'), values=data)
