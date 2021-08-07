@@ -1,3 +1,4 @@
+from databases.repositories.cars_repository import CarsRepository
 from databases.repositories.makes_repository import MakeRepository
 from http_fw.base_controller import BaseController
 from http_fw.errors import not_found
@@ -60,10 +61,22 @@ class MakesController(BaseController):
 
     def delete(self):
         makes_repository = MakeRepository(self.context)
-        makes_repository.delete(id=self.request.query_params.get('id'))
+        cars_repository = CarsRepository(self.context)
 
-        self.response.set_status(Response.HTTP_MOVED_PERMANENTLY)
-        self.response.add_header('Location', '/makes')
+        cars = cars_repository.find_by_parameter(first_param='make_id', second_param=int(self.request.body.get('id')),
+                                                 session=self.context)
+
+        if cars:
+            tmp = get_template('static/makes/delete_error.html')
+
+            self.response.set_body(tmp)
+            self.response.add_header('Content-Type', 'text/html')
+
+        else:
+            makes_repository.delete(id=self.request.body.get('id'))
+
+            self.response.set_status(Response.HTTP_MOVED_PERMANENTLY)
+            self.response.add_header('Location', '/makes')
 
     def update_get(self):
         make = get_item_by_id(id=self.request.query_params.get('id'), repository=MakeRepository(self.context))
