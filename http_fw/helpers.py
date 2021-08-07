@@ -33,5 +33,5 @@ def foreign_key(database: Any, id: int):
     return db.find({'id': id})
 
 
-def get_item_by_id(id, repository, session):
-    return repository(session).find(id=id)
+def get_item_by_id(id, repository):
+    return repository.find(id=id)
